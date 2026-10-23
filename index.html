@@ -287,7 +287,7 @@ body{background-image:radial-gradient(ellipse at 8% 45%,rgba(55,112,154,.12),tra
 @media(prefers-reduced-motion:reduce){#legends-vault *,#history-timeline *{transition:none!important;scroll-behavior:auto!important}}
 
 /* LEGENDS PRO AUTH UI */
-.auth-nav-btn{width:auto!important;min-height:44px;padding:0 17px!important;border:1px solid #f5d993!important;background:linear-gradient(135deg,#ffe9a8,#c49a45)!important;color:#111827!important;font-size:13px!important;font-weight:900!important;white-space:nowrap;box-shadow:0 5px 22px #c49a4538;letter-spacing:0!important}
+.auth-panel-nav{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px!important;background:#172033!important;border:1px solid #78f7ff!important;color:#bffaff!important;font-weight:900!important;white-space:nowrap;box-shadow:0 4px 18px #78f7ff20}.auth-panel-nav[hidden]{display:none!important}@media(max-width:600px){.auth-panel-nav{min-height:39px;padding:0 9px!important;font-size:11px!important}}\n.auth-nav-btn{width:auto!important;min-height:44px;padding:0 17px!important;border:1px solid #f5d993!important;background:linear-gradient(135deg,#ffe9a8,#c49a45)!important;color:#111827!important;font-size:13px!important;font-weight:900!important;white-space:nowrap;box-shadow:0 5px 22px #c49a4538;letter-spacing:0!important}
 .auth-nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px #c49a4555}
 .auth-nav-btn.logged-in{border-color:#c8ff5070!important;background:linear-gradient(135deg,#e5ffae,#8cbd45)!important;color:#17220b!important}
 .auth-overlay{position:fixed;inset:0;z-index:10050;display:none;place-items:center;padding:18px;background:#020712d9;backdrop-filter:blur(12px)}
@@ -335,7 +335,7 @@ body{background-image:radial-gradient(ellipse at 8% 45%,rgba(55,112,154,.12),tra
  <path d="m25 48 7 3 7-3" fill="none" stroke="#78f7ff" stroke-width="1.5" stroke-linecap="round"/>
 </svg></span><span class="brandname">LEGENDS<small>THE FOOTBALL ARCHIVE</small></span></a>
 <nav class="navlinks" id="navlinks"><a href="#clubs">باشگاه‌ها</a><a href="#trophy-vault">موزه جام‌ها</a><a href="#golden-eras">دوران‌های طلایی</a><a href="#competitions">رقابت‌ها</a><a href="#compare">مقایسه</a><a href="#data-lab">آزمایشگاه داده</a><a href="#legends">اسطوره‌ها</a><a href="#timeline">تاریخ فوتبال</a><a href="#about">درباره پروژه</a></nav>
-<div class="navactions"><button class="btn primary auth-nav-btn" id="openAuth" type="button"><span aria-hidden="true">♙</span> ورود / ثبت‌نام <span aria-hidden="true">↗</span></button><button class="iconbtn" id="openCommand" title="جست‌وجوی سریع (Ctrl+K)" aria-label="جست‌وجوی سریع">⌕</button><button class="iconbtn cinema-btn" id="stadiumToggle" title="فعال‌سازی حال‌وهوای استادیوم">✦ حالت استادیوم</button><button class="iconbtn" id="themeToggle" title="تغییر پوسته" aria-label="تغییر پوسته">☼</button><button class="iconbtn" id="favOnly" title="فقط علاقه‌مندی‌ها" aria-label="علاقه‌مندی‌ها">♡</button><a class="btn primary" href="#clubs">کاوش آرشیو <span>↗</span></a><button class="iconbtn hamb" id="menuToggle" aria-label="باز کردن منو">☰</button></div>
+<div class="navactions"><a class="btn primary auth-panel-nav" id="authPanelNav" href="/account/" hidden>پنل کاربری ↗</a><button class="btn primary auth-nav-btn" id="openAuth" type="button"><span aria-hidden="true">♙</span> ورود / ثبت‌نام <span aria-hidden="true">↗</span></button><button class="iconbtn" id="openCommand" title="جست‌وجوی سریع (Ctrl+K)" aria-label="جست‌وجوی سریع">⌕</button><button class="iconbtn cinema-btn" id="stadiumToggle" title="فعال‌سازی حال‌وهوای استادیوم">✦ حالت استادیوم</button><button class="iconbtn" id="themeToggle" title="تغییر پوسته" aria-label="تغییر پوسته">☼</button><button class="iconbtn" id="favOnly" title="فقط علاقه‌مندی‌ها" aria-label="علاقه‌مندی‌ها">♡</button><a class="btn primary" href="#clubs">کاوش آرشیو <span>↗</span></a><button class="iconbtn hamb" id="menuToggle" aria-label="باز کردن منو">☰</button></div>
 </div></header>
 <main id="home">
 <section class="hero"><div class="container hero-grid">
@@ -774,6 +774,8 @@ $('lv-grid').addEventListener('click',e=>{const b=e.target.closest('[data-player
       btn.classList.toggle('logged-in', isIn);
       btn.setAttribute('aria-label', isIn ? 'حساب کاربری و خروج' : 'ورود یا ثبت‌نام');
     }
+    const panelLink = $('authPanelNav');
+    if (panelLink) panelLink.hidden = !isIn;
   }
   $('openAuth')?.addEventListener('click', async () => {
     const {data, error} = await client.auth.getSession();
