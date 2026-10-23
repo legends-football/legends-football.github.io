@@ -198,20 +198,6 @@ img[alt]{color:var(--muted);font-size:11px}
  .section{scroll-margin-top:76px}
 }
 @media(prefers-reduced-motion:reduce){.brandmark,.brandmark:before{animation:none!important}}
-/* Cinematic animated LEGENDS crest: orbit, light sweep and metallic wordmark */
-.brandmark{position:relative;isolation:isolate;transform:translateZ(0);animation:legendCrestPulse 3.2s ease-in-out infinite,legendCrestFloat 5.5s ease-in-out infinite!important}
-.brandmark:before{inset:-5px!important;border:1px solid transparent!important;border-radius:19px!important;background:conic-gradient(from 0deg,rgba(105,244,255,0),rgba(105,244,255,.95),rgba(178,140,255,.85),rgba(242,204,118,.75),rgba(105,244,255,0)) border-box!important;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0)!important;-webkit-mask-composite:xor!important;mask-composite:exclude!important;box-shadow:0 0 17px rgba(105,244,255,.2)!important;animation:legendRing 4.2s linear infinite!important}
-.brandmark:after{content:"";position:absolute;z-index:4;inset:2px!important;border:0!important;border-radius:12px!important;background:linear-gradient(112deg,transparent 15%,rgba(255,255,255,0) 35%,rgba(255,255,255,.42) 49%,rgba(105,244,255,.22) 53%,transparent 70%);background-size:240% 100%;background-position:180% 0;transform:none!important;animation:legendLightSweep 4.8s ease-in-out infinite;pointer-events:none}
-.brandmark svg{position:relative;z-index:2;animation:legendGlyphBreathe 3.6s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(105,244,255,.55)) drop-shadow(0 0 13px rgba(178,140,255,.18))!important}
-.brandname{background:linear-gradient(100deg,#fff 0%,#c8fbff 22%,#f4d58c 42%,#fff 55%,#b9f8ff 74%,#fff 100%);background-size:230% auto;background-clip:text;-webkit-background-clip:text;color:transparent!important;animation:legendWordmarkShine 7s linear infinite;text-shadow:none!important}
-.brandname small{background:linear-gradient(90deg,#8fdde9,#f2cc76,#8fdde9);background-size:200% auto;background-clip:text;-webkit-background-clip:text;color:transparent!important;animation:legendWordmarkShine 8s linear infinite}
-.brand:hover .brandmark{transform:scale(1.06) rotate(-3deg);box-shadow:0 0 22px rgba(105,244,255,.35),0 0 38px rgba(178,140,255,.16),inset 0 0 18px rgba(105,244,255,.18)!important}
-.brand:hover .brandname{letter-spacing:2.5px}
-@keyframes legendLightSweep{0%,12%{background-position:180% 0;opacity:0}25%{opacity:1}48%{background-position:-80% 0;opacity:.75}60%,100%{background-position:-80% 0;opacity:0}}
-@keyframes legendCrestFloat{0%,100%{translate:0 0}50%{translate:0 -2px}}
-@keyframes legendGlyphBreathe{0%,100%{transform:scale(1);filter:drop-shadow(0 0 5px rgba(105,244,255,.4))}50%{transform:scale(1.035);filter:drop-shadow(0 0 9px rgba(105,244,255,.8)) drop-shadow(0 0 13px rgba(178,140,255,.25))}}
-@keyframes legendWordmarkShine{to{background-position:230% center}}
-@media(prefers-reduced-motion:reduce){.brandmark,.brandmark:before,.brandmark:after,.brandmark svg,.brandname,.brandname small{animation:none!important}.brandmark:after{display:none}}
 </style>
 
 
@@ -299,36 +285,39 @@ body{background-image:radial-gradient(ellipse at 8% 45%,rgba(55,112,154,.12),tra
 #history-timeline .tl-controls{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.tl-track{position:relative;margin:28px 0 10px;padding:0 4px}.tl-track:before{content:"";position:absolute;right:15px;top:0;bottom:0;width:2px;background:linear-gradient(var(--lv-gold),rgba(232,196,119,.04))}.tl-event{position:relative;margin:0 0 18px;padding:18px 48px 18px 18px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:linear-gradient(120deg,rgba(255,255,255,.055),rgba(255,255,255,.018));transition:.2s}.tl-event:before{content:"";position:absolute;right:7px;top:25px;width:18px;height:18px;border-radius:50%;background:var(--lv-gold);box-shadow:0 0 0 5px rgba(232,196,119,.13),0 0 24px rgba(232,196,119,.35)}.tl-event:hover{border-color:rgba(232,196,119,.4);transform:translateX(-3px)}.tl-year{font-size:25px;font-weight:950;color:var(--lv-gold);letter-spacing:-1px}.tl-tag{display:inline-block;margin-right:8px;border:1px solid rgba(232,196,119,.25);border-radius:999px;padding:4px 8px;font-size:10px;color:#e9d29b}.tl-event h3{margin:7px 0;font-size:17px}.tl-event p{margin:0;color:#aebdce;font-size:13px;line-height:1.9}.tl-foot{font-size:11px;color:#7f91a4;line-height:1.8;margin-top:16px}
 @media(max-width:950px){.lv-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.lv-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.lv-tools{grid-template-columns:1fr 1fr}.lv-tools .lv-input{grid-column:1/-1}.lv-cardbody{padding:11px}.lv-name{font-size:15px}.lv-card p{min-height:0}.lv-title{font-size:30px}}@media(max-width:390px){.lv-grid{grid-template-columns:1fr}.lv-card{display:grid;grid-template-columns:82px 1fr}.lv-cardtop{height:100%;min-height:150px}.lv-avatar{width:50px;height:50px}.lv-card p{min-height:0}}
 @media(prefers-reduced-motion:reduce){#legends-vault *,#history-timeline *{transition:none!important;scroll-behavior:auto!important}}
-</style>
-<style id="legends-centerpiece-cinematic">
-.hero-art{isolation:isolate;perspective:1000px}
-.hero-art:before{content:"";position:absolute;width:min(330px,78%);aspect-ratio:1;border-radius:50%;z-index:0;background:radial-gradient(circle,rgba(255,220,133,.24) 0%,rgba(216,172,72,.12) 34%,rgba(60,128,171,.06) 55%,transparent 72%);filter:blur(5px);animation:centerGlow 4.8s ease-in-out infinite}
-.hero-art:after{content:"";position:absolute;width:min(285px,70%);aspect-ratio:1;border-radius:50%;z-index:1;border:1px solid rgba(255,221,143,.32);box-shadow:0 0 24px rgba(241,195,94,.12),inset 0 0 24px rgba(241,195,94,.07);background:conic-gradient(from 0deg,transparent 0 68%,rgba(255,236,174,.8) 76%,transparent 83% 100%);mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1px));animation:centerOrbit 13s linear infinite;pointer-events:none}
-.art-orbit{z-index:0;animation:orbitBreath 6s ease-in-out infinite}
-.art-orbit:before{border-color:rgba(244,205,120,.28);animation:centerOrbit 28s linear infinite}
-.art-orbit:after{border-color:rgba(255,235,177,.24);box-shadow:0 0 18px rgba(242,200,106,.08);animation:centerOrbit 20s linear infinite reverse}
-.hero-shield{position:relative;z-index:2;width:clamp(210px,25vw,270px);transform-style:preserve-3d;filter:drop-shadow(0 20px 22px rgba(0,0,0,.48)) drop-shadow(0 0 12px rgba(242,200,106,.22));animation:shieldFloat 6s ease-in-out infinite,shieldRadiance 4.2s ease-in-out infinite;transition:filter .35s,transform .35s}
-.hero-shield:focus{outline:none}
-.hero-art:hover .hero-shield{filter:drop-shadow(0 25px 25px rgba(0,0,0,.5)) drop-shadow(0 0 25px rgba(255,218,128,.42));transform:translateY(-4px) rotateY(-5deg) scale(1.035)}
-.hero-shield path:first-of-type{stroke-dasharray:900;stroke-dashoffset:0;animation:shieldEdge 7s ease-in-out infinite}
-.hero-shield circle{transform-box:fill-box;transform-origin:center;animation:starMedallion 4s ease-in-out infinite}
-.hero-shield path:nth-of-type(2){filter:drop-shadow(0 0 3px rgba(255,225,145,.15))}
-.hero-shield text{filter:drop-shadow(0 0 5px rgba(255,220,130,.12))}
-.hero-glow{z-index:0;width:260px;height:260px;background:radial-gradient(circle,rgba(255,218,127,.2),rgba(210,167,71,.07) 42%,transparent 70%);animation:centerGlow 4.8s ease-in-out infinite}
-.art-label{border-color:rgba(239,203,125,.24);box-shadow:0 14px 36px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035);animation:labelFloat 7s ease-in-out infinite}
-.art-label.one{animation-delay:-1.2s}.art-label.three{animation-delay:-3.2s}
-@keyframes centerOrbit{to{transform:rotate(360deg)}}
-@keyframes centerGlow{0%,100%{opacity:.62;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}
-@keyframes orbitBreath{0%,100%{opacity:.65;transform:scale(.98)}50%{opacity:1;transform:scale(1.035)}}
-@keyframes shieldFloat{0%,100%{transform:translateY(0) rotateY(-2deg) rotateZ(-1deg)}50%{transform:translateY(-13px) rotateY(3deg) rotateZ(1deg)}}
-@keyframes shieldRadiance{0%,100%{filter:drop-shadow(0 20px 22px rgba(0,0,0,.48)) drop-shadow(0 0 9px rgba(242,200,106,.16))}50%{filter:drop-shadow(0 24px 26px rgba(0,0,0,.45)) drop-shadow(0 0 24px rgba(255,218,128,.42))}}
-@keyframes shieldEdge{0%,100%{stroke: url(#shieldG)}50%{stroke:#fff0b5}}
-@keyframes starMedallion{0%,100%{filter:drop-shadow(0 0 0 rgba(255,225,145,0));transform:scale(1)}50%{filter:drop-shadow(0 0 8px rgba(255,225,145,.38));transform:scale(1.035)}}
-@keyframes labelFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-@media(max-width:700px){.hero-art{min-height:290px}.hero-shield{width:clamp(175px,54vw,220px)}.hero-art:after{width:min(245px,69%)}.hero-art:before{width:min(285px,78%)}.art-orbit{width:min(320px,94%)}}
-@media(prefers-reduced-motion:reduce){.hero-art:before,.hero-art:after,.art-orbit,.art-orbit:before,.art-orbit:after,.hero-shield,.hero-shield circle,.hero-shield path:first-of-type,.art-label,.hero-glow{animation:none!important;transition:none!important}}
-</style>
 
+/* LEGENDS PRO AUTH UI */
+.auth-nav-btn{width:auto!important;min-height:44px;padding:0 17px!important;border:1px solid #f5d993!important;background:linear-gradient(135deg,#ffe9a8,#c49a45)!important;color:#111827!important;font-size:13px!important;font-weight:900!important;white-space:nowrap;box-shadow:0 5px 22px #c49a4538;letter-spacing:0!important}
+.auth-nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px #c49a4555}
+.auth-nav-btn.logged-in{border-color:#c8ff5070!important;background:linear-gradient(135deg,#e5ffae,#8cbd45)!important;color:#17220b!important}
+.auth-overlay{position:fixed;inset:0;z-index:10050;display:none;place-items:center;padding:18px;background:#020712d9;backdrop-filter:blur(12px)}
+.auth-overlay.open{display:grid}
+.auth-dialog{width:min(470px,100%);max-height:min(90vh,760px);overflow:auto;position:relative;border:1px solid #ffffff24;border-radius:24px;padding:25px;background:radial-gradient(circle at 100% 0,#21476a55,transparent 40%),#081525;box-shadow:0 35px 110px #000b;color:#f5f8ff}
+.auth-close{position:absolute;left:16px;top:16px;width:36px;height:36px;border-radius:11px;border:1px solid #ffffff20;background:#ffffff0b;color:#fff;font-size:20px;cursor:pointer}
+.auth-kicker{font-size:10px;letter-spacing:2px;color:#78f7ff;font-weight:900}
+.auth-dialog h2{font-size:26px;margin:9px 0 5px;font-weight:900}
+.auth-subtitle{color:#a9bad0;font-size:12px;line-height:1.9;margin:0 0 20px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:5px;background:#ffffff08;border:1px solid #ffffff12;border-radius:14px;margin:15px 0}
+.auth-tab{padding:11px;border:0;border-radius:10px;background:transparent;color:#b7c6d8;font:700 13px inherit;cursor:pointer}
+.auth-tab.active{background:#78f7ff1b;color:#dffaff;box-shadow:inset 0 0 0 1px #78f7ff35}
+.auth-field{display:block;margin:13px 0}
+.auth-field span{display:block;color:#c6d3e2;font-size:11px;margin-bottom:7px}
+.auth-field input{width:100%;box-sizing:border-box;border:1px solid #ffffff1c;border-radius:12px;padding:13px 14px;background:#050d19;color:#f5f8ff;font:14px inherit;outline:none}
+.auth-field input:focus{border-color:#78f7ff9c;box-shadow:0 0 0 3px #78f7ff12}
+.auth-submit{width:100%;justify-content:center;margin-top:8px;border:1px solid #78f7ff!important;background:linear-gradient(100deg,#78f7ff,#b4a5ff)!important;color:#06111c!important;font-weight:900!important}
+.auth-message{display:none;margin-top:14px;padding:11px 12px;border:1px solid #ffffff19;border-radius:12px;font-size:12px;line-height:1.8;color:#dce9f8;background:#ffffff08;overflow-wrap:anywhere}
+.auth-message.show{display:block}
+.auth-message.error{border-color:#ff8d9d55;color:#ffc5cc;background:#ff5a7210}
+.auth-message.success{border-color:#c8ff5055;color:#e2ffb2;background:#c8ff500c}
+.auth-user-card{padding:16px;border:1px solid #ffffff16;border-radius:16px;background:#ffffff07;margin:18px 0}
+.auth-user-email{font-size:13px;font-weight:800;overflow-wrap:anywhere}
+.auth-user-note{font-size:11px;color:#a9bad0;line-height:1.9;margin-top:6px}
+.auth-user-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.auth-user-actions a,.auth-user-actions button{flex:1;justify-content:center;text-align:center}
+.auth-privacy-note{font-size:10px;color:#859ab3;line-height:1.8;margin-top:15px}
+@media(max-width:600px){.auth-dialog{padding:22px 17px}.auth-dialog h2{font-size:23px}.auth-nav-btn{font-size:11px!important;padding:0 10px!important;min-height:39px!important;gap:4px!important}.navactions{gap:5px}}
+
+</style>
 </head>
 <body>
 <header class="topbar"><div class="container nav">
@@ -346,7 +335,7 @@ body{background-image:radial-gradient(ellipse at 8% 45%,rgba(55,112,154,.12),tra
  <path d="m25 48 7 3 7-3" fill="none" stroke="#78f7ff" stroke-width="1.5" stroke-linecap="round"/>
 </svg></span><span class="brandname">LEGENDS<small>THE FOOTBALL ARCHIVE</small></span></a>
 <nav class="navlinks" id="navlinks"><a href="#clubs">باشگاه‌ها</a><a href="#trophy-vault">موزه جام‌ها</a><a href="#golden-eras">دوران‌های طلایی</a><a href="#competitions">رقابت‌ها</a><a href="#compare">مقایسه</a><a href="#data-lab">آزمایشگاه داده</a><a href="#legends">اسطوره‌ها</a><a href="#timeline">تاریخ فوتبال</a><a href="#about">درباره پروژه</a></nav>
-<div class="navactions"><button class="iconbtn" id="openCommand" title="جست‌وجوی سریع (Ctrl+K)" aria-label="جست‌وجوی سریع">⌕</button><button class="iconbtn cinema-btn" id="stadiumToggle" title="فعال‌سازی حال‌وهوای استادیوم">✦ حالت استادیوم</button><button class="iconbtn" id="themeToggle" title="تغییر پوسته" aria-label="تغییر پوسته">☼</button><button class="iconbtn" id="favOnly" title="فقط علاقه‌مندی‌ها" aria-label="علاقه‌مندی‌ها">♡</button><a class="btn primary" href="#clubs">کاوش آرشیو <span>↗</span></a><button class="iconbtn hamb" id="menuToggle" aria-label="باز کردن منو">☰</button></div>
+<div class="navactions"><button class="btn primary auth-nav-btn" id="openAuth" type="button"><span aria-hidden="true">♙</span> ورود / ثبت‌نام <span aria-hidden="true">↗</span></button><button class="iconbtn" id="openCommand" title="جست‌وجوی سریع (Ctrl+K)" aria-label="جست‌وجوی سریع">⌕</button><button class="iconbtn cinema-btn" id="stadiumToggle" title="فعال‌سازی حال‌وهوای استادیوم">✦ حالت استادیوم</button><button class="iconbtn" id="themeToggle" title="تغییر پوسته" aria-label="تغییر پوسته">☼</button><button class="iconbtn" id="favOnly" title="فقط علاقه‌مندی‌ها" aria-label="علاقه‌مندی‌ها">♡</button><a class="btn primary" href="#clubs">کاوش آرشیو <span>↗</span></a><button class="iconbtn hamb" id="menuToggle" aria-label="باز کردن منو">☰</button></div>
 </div></header>
 <main id="home">
 <section class="hero"><div class="container hero-grid">
@@ -678,4 +667,190 @@ $('lv-search').addEventListener('input',drawLegends);$('lv-era').addEventListene
 $('lv-grid').addEventListener('click',e=>{const b=e.target.closest('[data-player]');if(!b)return;const x=legends.find(z=>z.id===Number(b.dataset.player));if(!x)return;$('lv-modal-title').textContent=x.fa+' | '+x.en;$('lv-modal-content').innerHTML=`<p>${safe(x.desc)}</p><div class="lv-modalstats"><span>ملیت: ${safe(x.country)}</span><span>سال تولد: ${x.year}</span><span>پست: ${safe(x.pos==='Forward'?'مهاجم':x.pos==='Midfielder'?'هافبک':x.pos==='Defender'?'مدافع':'دروازه‌بان')}</span><span>باشگاه‌ها: ${safe(x.club)}</span></div><h4 style="color:#e8c477;margin:22px 0 8px">نکات برجسته</h4><ul style="color:#c0ccda;line-height:2.1">${x.highlights.map(h=>'<li>'+safe(h)+'</li>').join('')}</ul><p><b style="color:#e8c477">شناسه فوتبالی:</b> ${safe(x.style)}</p>`;$('lv-modal').classList.add('open');document.body.style.overflow='hidden'});function closeModal(){$('lv-modal').classList.remove('open');document.body.style.overflow=''}$('lv-modal-close').addEventListener('click',closeModal);$('lv-modal').addEventListener('click',e=>{if(e.target===$('lv-modal'))closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});drawLegends();drawTimeline();window.LEGENDS_PRO_ARCHIVE={players:legends,timeline:events,version:'2026.10'};
 })();
 </script>
+
+<div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <section class="auth-dialog">
+    <button class="auth-close" id="authClose" type="button" aria-label="بستن">×</button>
+    <div class="auth-kicker">LEGENDS PRO · ACCOUNT</div>
+    <h2 id="authTitle">ورود به حساب کاربری</h2>
+    <p class="auth-subtitle">حساب خودت را بساز تا بعداً علاقه‌مندی‌ها و آمار چلنج‌ها به همین حساب وصل شوند.</p>
+    <div id="authSignedOut">
+      <div class="auth-tabs" role="tablist" aria-label="نوع ورود">
+        <button class="auth-tab active" id="authTabLogin" type="button" role="tab" aria-selected="true">ورود</button>
+        <button class="auth-tab" id="authTabSignup" type="button" role="tab" aria-selected="false">ثبت‌نام</button>
+      </div>
+      <form id="authForm">
+        <label class="auth-field" id="authNameWrap" hidden><span>نام نمایشی</span><input id="authName" type="text" maxlength="40" autocomplete="nickname" placeholder="مثلاً مهدی"></label>
+        <label class="auth-field"><span>ایمیل</span><input id="authEmail" type="email" required maxlength="254" autocomplete="email" placeholder="name@example.com"></label>
+        <label class="auth-field"><span>رمز عبور</span><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="حداقل ۸ نویسه"></label>
+        <button class="btn primary auth-submit" id="authSubmit" type="submit">ورود امن ↗</button>
+      </form>
+      <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
+      <p class="auth-privacy-note">رمز عبور توسط Supabase Auth مدیریت می‌شود. هرگز رمز خودت را با کسی به اشتراک نگذار.</p>
+    </div>
+    <div id="authSignedIn" hidden>
+      <div class="auth-user-card">
+        <div class="auth-kicker">SIGNED IN</div>
+        <div class="auth-user-email" id="authUserEmail"></div>
+        <div class="auth-user-note">ورود انجام شده است. نشست این سایت با پنل حساب در همین دامنه به اشتراک گذاشته می‌شود، چون هر دو از یک پروژه‌ی Supabase استفاده می‌کنند.</div>
+      </div>
+      <div class="auth-user-actions">
+        <a class="btn primary" href="/account/">رفتن به پنل کاربری ↗</a>
+        <button class="btn" id="authLogout" type="button">خروج از حساب</button>
+      </div>
+      <div class="auth-message" id="authSignedInMessage" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  'use strict';
+  const SUPABASE_URL = 'https://mrkcarjkwmioljvdsbpl.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_Zo5EYx1Yl5wMGc1GWcQBBA_I-lF9ZDR';
+  const $ = id => document.getElementById(id);
+  const overlay = $('authOverlay');
+  if (!overlay || !window.supabase || !window.supabase.createClient) {
+    const btn = $('openAuth');
+    if (btn) btn.addEventListener('click', () => { window.location.href = '/account/'; });
+    return;
+  }
+
+  // Uses Supabase's default persistent browser storage. Keep the same project and
+  // default auth storage key on /account/ so the same-origin pages share the session.
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  let mode = 'login';
+  const msg = (text, kind='') => {
+    const el = $('authMessage');
+    el.textContent = text;
+    el.className = 'auth-message show' + (kind ? ' ' + kind : '');
+  };
+  const clearMsg = () => {
+    const el = $('authMessage');
+    el.textContent = '';
+    el.className = 'auth-message';
+  };
+  const signedInMsg = (text, kind='') => {
+    const el = $('authSignedInMessage');
+    el.textContent = text;
+    el.className = 'auth-message show' + (kind ? ' ' + kind : '');
+  };
+  function setMode(next) {
+    mode = next;
+    const signup = mode === 'signup';
+    $('authTabLogin').classList.toggle('active', !signup);
+    $('authTabSignup').classList.toggle('active', signup);
+    $('authTabLogin').setAttribute('aria-selected', String(!signup));
+    $('authTabSignup').setAttribute('aria-selected', String(signup));
+    $('authNameWrap').hidden = !signup;
+    $('authTitle').textContent = signup ? 'ساخت حساب جدید' : 'ورود به حساب کاربری';
+    $('authSubmit').textContent = signup ? 'ساخت حساب ↗' : 'ورود امن ↗';
+    $('authPassword').setAttribute('autocomplete', signup ? 'new-password' : 'current-password');
+    clearMsg();
+  }
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => (client.auth.getSession().then(({data}) => {
+      if (data && data.session) $('authLogout').focus();
+      else $('authEmail').focus();
+    })), 0);
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    $('openAuth')?.focus();
+  }
+  function paintSession(session) {
+    const isIn = !!(session && session.user);
+    $('authSignedOut').hidden = isIn;
+    $('authSignedIn').hidden = !isIn;
+    $('authUserEmail').textContent = isIn ? (session.user.email || 'حساب کاربری') : '';
+    const btn = $('openAuth');
+    if (btn) {
+      btn.textContent = isIn ? 'حساب کاربری ✓' : 'ورود / ثبت‌نام';
+      btn.classList.toggle('logged-in', isIn);
+      btn.setAttribute('aria-label', isIn ? 'حساب کاربری و خروج' : 'ورود یا ثبت‌نام');
+    }
+  }
+  $('openAuth')?.addEventListener('click', async () => {
+    const {data, error} = await client.auth.getSession();
+    if (error) { openModal(); msg('بررسی وضعیت ورود ممکن نشد. اتصال اینترنت را بررسی کن.', 'error'); return; }
+    paintSession(data.session);
+    openModal();
+  });
+  $('authClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+  $('authTabLogin').addEventListener('click', () => setMode('login'));
+  $('authTabSignup').addEventListener('click', () => setMode('signup'));
+
+  $('authForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    clearMsg();
+    const email = $('authEmail').value.trim();
+    const password = $('authPassword').value;
+    const displayName = $('authName').value.trim();
+    if (password.length < 8) { msg('رمز عبور باید حداقل ۸ نویسه داشته باشد.', 'error'); return; }
+    const submit = $('authSubmit');
+    submit.disabled = true;
+    submit.textContent = mode === 'signup' ? 'در حال ساخت حساب…' : 'در حال ورود…';
+    try {
+      if (mode === 'signup') {
+        const {data, error} = await client.auth.signUp({
+          email, password,
+          options: {
+            data: displayName ? {display_name: displayName} : {},
+            emailRedirectTo: window.location.origin + '/account/'
+          }
+        });
+        if (error) throw error;
+        if (data.session) {
+          paintSession(data.session);
+          signedInMsg('حساب ساخته شد و وارد شدی.', 'success');
+        } else {
+          msg('درخواست ثبت‌نام ثبت شد. اگر تأیید ایمیل در Supabase فعال باشد، ایمیلت را باز کن و لینک تأیید را بزن؛ سپس وارد شو.', 'success');
+        }
+      } else {
+        const {data, error} = await client.auth.signInWithPassword({email, password});
+        if (error) throw error;
+        paintSession(data.session);
+        $('authPassword').value = '';
+        signedInMsg('با موفقیت وارد شدی.', 'success');
+      }
+    } catch (err) {
+      msg(err && err.message ? err.message : 'عملیات انجام نشد. دوباره تلاش کن.', 'error');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = mode === 'signup' ? 'ساخت حساب ↗' : 'ورود امن ↗';
+    }
+  });
+
+  $('authLogout').addEventListener('click', async () => {
+    const btn = $('authLogout');
+    btn.disabled = true;
+    try {
+      const {error} = await client.auth.signOut({scope:'local'});
+      if (error) throw error;
+      paintSession(null);
+      setMode('login');
+      signedInMsg('از حساب خارج شدی.', 'success');
+    } catch (err) {
+      signedInMsg(err && err.message ? err.message : 'خروج انجام نشد؛ دوباره تلاش کن.', 'error');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  client.auth.getSession().then(({data, error}) => {
+    if (!error) paintSession(data.session);
+  });
+  client.auth.onAuthStateChange((_event, session) => {
+    paintSession(session);
+  });
+})();
+</script>
+
 </body></html>
