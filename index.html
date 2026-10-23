@@ -372,6 +372,17 @@ body{background-image:radial-gradient(ellipse at 8% 45%,rgba(55,112,154,.12),tra
  </div>
 </section>
 
+<section class="section live-center" id="lf-team-form" aria-labelledby="lftf-title">
+ <div class="container">
+  <div class="section-head"><div><div class="section-kicker">LEGENDS RECENT FORM</div><h2 id="lftf-title">۵ بازی اخیر هر تیم</h2><p class="section-sub">نتایج پنج مسابقه رسمی اخیر تیم انتخاب‌شده؛ اطلاعات از سرویس فوتبال دریافت می‌شود.</p></div><div class="live-status"><i class="live-dot"></i><span id="lftf-status">آمادهٔ جست‌وجوی تیم</span></div></div>
+  <article class="live-panel">
+   <div class="lf-standings-toolbar"><label for="lftf-team-id">شناسهٔ تیم در football-data.org</label><input id="lftf-team-id" type="number" min="1" max="99999" value="65" inputmode="numeric" style="background:var(--panel,#101d2e);color:var(--text,#eef4fb);border:1px solid var(--line,#334155);border-radius:10px;padding:10px 13px;font:inherit;width:150px"><button type="button" id="lftf-refresh">↻ دریافت ۵ بازی اخیر</button></div>
+   <div id="lftf-results" class="lf-table-wrap"><div class="lf-standings-empty">شناسهٔ تیم را وارد کن و روی دریافت بزن. مقدار پیش‌فرض ۶۵ برای منچسترسیتی است.</div></div>
+   <p class="lf-standings-caption" id="lftf-updated">نمایش نتیجه‌ها به فعال بودن مسیر team-form در تابع Supabase و سطح دسترسی API بستگی دارد.</p>
+  </article>
+ </div>
+</section>
+
 <section class="section live-center" id="lf-standings" aria-labelledby="lf-standings-title">
  <div class="container">
   <div class="section-head"><div><div class="section-kicker">LEGENDS LEAGUE TABLES</div><h2 id="lf-standings-title">جدول رده‌بندی لیگ‌ها</h2><p class="section-sub">رتبه، بازی‌ها، برد، مساوی، باخت، تفاضل گل و امتیاز از منبع داده دریافت می‌شود.</p></div><div class="live-status"><i class="live-dot"></i><span id="lfs-status">آمادهٔ دریافت جدول</span></div></div>
@@ -981,6 +992,20 @@ if(window.LEGENDS_SUPABASE_CLIENT){window.LEGENDS_SUPABASE_CLIENT.auth.onAuthSta
  function draw(data){const groups=Array.isArray(data.standings)?data.standings:[];const group=groups.find(x=>x.type==='TOTAL')||groups[0];const rows=group&&Array.isArray(group.table)?group.table:[];if(!rows.length){table.innerHTML='<div class="lf-standings-empty">جدولی برای این رقابت در پاسخ منبع پیدا نشد. ممکن است پلن داده، جدول این رقابت را پوشش ندهد.</div>';return}table.innerHTML='<table class="lf-standings-table"><thead><tr><th>رتبه</th><th>تیم</th><th>بازی</th><th>برد</th><th>مساوی</th><th>باخت</th><th>تفاضل گل</th><th>امتیاز</th></tr></thead><tbody>'+rows.map(r=>{const t=r.team||{};return '<tr><td>'+fa(r.position)+'</td><td><span class="lf-standings-team">'+(t.crest?'<img loading="lazy" src="'+esc(t.crest)+'" alt="">':'')+'<span>'+esc(t.name||'تیم')+'</span></span></td><td>'+fa(r.playedGames)+'</td><td>'+fa(r.won)+'</td><td>'+fa(r.draw)+'</td><td>'+fa(r.lost)+'</td><td>'+fa(r.goalDifference)+'</td><td><b>'+fa(r.points)+'</b></td></tr>'}).join('')+'</tbody></table>'}
  async function load(){if(busy)return;busy=true;status.textContent='در حال دریافت جدول…';$('lfs-refresh').disabled=true;try{const r=await fetch(endpoint+'?type=standings&competition='+encodeURIComponent(select.value),{headers:{'Accept':'application/json','apikey':anon,'Authorization':'Bearer '+anon},cache:'no-store'});const data=await r.json();if(!r.ok)throw new Error(data.error||'خطای دریافت جدول ('+r.status+')');if(!Array.isArray(data.standings))throw new Error(data.error||'ساختار پاسخ جدول معتبر نیست.');draw(data);status.textContent='جدول دریافت شد';updated.textContent='آخرین به‌روزرسانی: '+new Date().toLocaleString('fa-IR')+' · ممکن است محدودیت یا تأخیر منبع اعمال شود.'}catch(e){table.innerHTML='<div class="lf-standings-empty">'+esc(e.message||'دریافت جدول ناموفق بود.')+'<br>اگر تابع قدیمی است، باید نسخهٔ جدید Edge Function را هم Deploy کنی.</div>';status.textContent='جدول دریافت نشد'}finally{busy=false;$('lfs-refresh').disabled=false}}
  select.addEventListener('change',load);$('lfs-refresh').addEventListener('click',load);load();
+})();
+</script>
+
+
+<script>
+/* LEGENDS recent team form: requires type=team-form in the deployed Edge Function. */
+(()=>{
+ const endpoint='https://mrkcarjkwmioljvdsbpl.supabase.co/functions/v1/live-football';
+ const anon='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ya2Nhcmprd21pb2xqdmRzYnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NTExNTIsImV4cCI6MjEwODIyNzE1Mn0.GCm3HeuqtdLvjVjRmc1zf6PFSMdS_ahhjPi8Exrx-VU';
+ const $=id=>document.getElementById(id), esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), fa=v=>String(v??'—').replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+ const input=$('lftf-team-id'), results=$('lftf-results'), status=$('lftf-status'), updated=$('lftf-updated'), button=$('lftf-refresh'); if(!input||!results||!button)return; let busy=false;
+ function outcome(m,id){const hid=Number(m.homeTeam?.id),aid=Number(m.awayTeam?.id),hs=m.score?.fullTime?.home,as=m.score?.fullTime?.away;if(hs==null||as==null)return '—';const ours=id===hid?hs:as, theirs=id===hid?as:hs;return ours>theirs?'برد':ours<theirs?'باخت':'مساوی'}
+ async function load(){if(busy)return;const id=Number(input.value);if(!Number.isInteger(id)||id<1){status.textContent='شناسه معتبر نیست';return}busy=true;button.disabled=true;status.textContent='در حال دریافت نتیجه‌ها…';results.innerHTML='<div class="lf-standings-empty">در حال بارگذاری پنج مسابقه اخیر…</div>';try{const r=await fetch(endpoint+'?type=team-form&teamId='+encodeURIComponent(id)+'&limit=5',{headers:{'Accept':'application/json','apikey':anon,'Authorization':'Bearer '+anon},cache:'no-store'});const data=await r.json();if(!r.ok)throw new Error(data.error||'خطای دریافت ('+r.status+')');if(!Array.isArray(data.matches))throw new Error('ساختار پاسخ معتبر نیست.');const ms=data.matches;if(!ms.length){results.innerHTML='<div class="lf-standings-empty">در بازهٔ قابل‌دسترسی مسابقهٔ پایان‌یافته‌ای پیدا نشد.</div>'}else{results.innerHTML='<table class="lf-standings-table"><thead><tr><th>تاریخ</th><th>رقابت</th><th>مسابقه</th><th>نتیجه</th><th>وضعیت تیم</th></tr></thead><tbody>'+ms.map(m=>{const h=m.homeTeam||{},a=m.awayTeam||{},sc=m.score?.fullTime||{},has=sc.home!=null&&sc.away!=null;return '<tr><td>'+esc(m.utcDate?new Date(m.utcDate).toLocaleDateString('fa-IR'):'—')+'</td><td>'+esc(m.competition?.name||m.competition?.code||'—')+'</td><td>'+esc(h.name||'میزبان')+' '+(has?fa(sc.home)+' - '+fa(sc.away):'—')+' '+esc(a.name||'مهمان')+'</td><td>'+(has?fa(sc.home)+' - '+fa(sc.away):'—')+'</td><td>'+outcome(m,id)+'</td></tr>'}).join('')+'</tbody></table>'}status.textContent='دریافت انجام شد · '+fa(ms.length)+' مسابقه';updated.textContent='آخرین بررسی: '+new Date().toLocaleString('fa-IR')+' · منبع: football-data.org';}catch(e){results.innerHTML='<div class="lf-standings-empty">'+esc(e.message||'دریافت ناموفق بود.')+'<br>اگر تابع جدید هنوز Deploy نشده، این قابلیت تا آن زمان فعال نمی‌شود.</div>';status.textContent='دریافت ناموفق بود'}finally{busy=false;button.disabled=false}}
+ button.addEventListener('click',load);input.addEventListener('keydown',e=>{if(e.key==='Enter')load()});
 })();
 </script>
 
