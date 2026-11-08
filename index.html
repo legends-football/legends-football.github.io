@@ -1390,31 +1390,34 @@ if(window.LEGENDS_SUPABASE_CLIENT){window.LEGENDS_SUPABASE_CLIENT.auth.onAuthSta
 
 
 <script id="legends-api-traffic-guard">
-/* Shared request guard: cache, deduplicate, and limit bursts against the Supabase Edge Function. */
+/* LEGENDS PRO request guard: browser cache, in-tab deduplication, and bounded concurrency. */
 (()=>{
  'use strict';
- const PREFIX='legends-api-v3:', inflight=new Map(), queue=[];let active=0;
+ const PREFIX='legends-api-v4:', inflight=new Map(), queue=[];let active=0;
  const now=()=>Date.now();
- function ttlFor(url){const u=new URL(url,location.href),type=u.searchParams.get('type');if(type==='standings')return 15*60*1000;if(type==='team-form')return 10*60*1000;if(type==='match')return 30*60*1000;return 75*1000;}
- function maxStaleFor(url){const u=new URL(url,location.href),type=u.searchParams.get('type');return type==='standings'?6*60*60*1000:type==='team-form'?2*60*60*1000:type==='match'?6*60*60*1000:10*60*1000;}
- function read(key){try{const x=JSON.parse(localStorage.getItem(PREFIX+key)||'null');return x&&x.at&&x.data!==undefined?x:null}catch(_){return null}}
- function response(data,status=200){return new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json'}})}
- function runQueued(task){return new Promise((resolve,reject)=>{queue.push({task,resolve,reject});pump()})}
- function pump(){while(active<2&&queue.length){const item=queue.shift();active++;Promise.resolve().then(item.task).then(item.resolve,item.reject).finally(()=>{active--;pump()})}}
+ function typeOf(url){try{return new URL(url,location.href).searchParams.get('type')||'matches'}catch(_){return'matches'}}
+ function ttlFor(url,data){const type=typeOf(url);if(type==='standings'||type==='team-form')return 5*60*1000;if(type==='match'){const status=data?.match?.status;return ['IN_PLAY','PAUSED','LIVE'].includes(status)?15*1000:5*60*1000;}return 45*1000;}
+ function maxStaleFor(url){const type=typeOf(url);return type==='standings'?6*60*60*1000:type==='team-form'?2*60*60*1000:type==='match'?6*60*60*1000:10*60*1000;}
+ function read(key){try{const x=JSON.parse(localStorage.getItem(PREFIX+key)||'null');return x&&Number.isFinite(x.at)&&x.data!==undefined?x:null}catch(_){return null}}
+ function makeResponse(data,status=200,headers={}){return new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json',...headers}})}
+ function enqueue(task){return new Promise((resolve,reject)=>{queue.push({task,resolve,reject});pump()})}
+ function pump(){while(active<3&&queue.length){const item=queue.shift();active++;Promise.resolve().then(item.task).then(item.resolve,item.reject).finally(()=>{active--;pump()})}}
+ async function perform(url,options,key,cached,age,maxStale){
+  try{
+   const network=await fetch(url,options);
+   const data=await network.clone().json().catch(async()=>({error:await network.clone().text().catch(()=> 'Invalid API response')}));
+   if(network.ok){try{localStorage.setItem(PREFIX+key,JSON.stringify({at:now(),data}))}catch(_){}return {data,status:network.status,headers:{'X-LEGENDS-BROWSER-CACHE':'MISS'}};}
+   if(cached&&age<maxStale&&(network.status===429||network.status>=500))return {data:{...cached.data,cacheNotice:'نمایش آخرین دادهٔ ذخیره‌شده به‌دلیل محدودیت یا اختلال موقت منبع'},status:200,headers:{'X-LEGENDS-BROWSER-CACHE':'STALE'}};
+   return {data,status:network.status,headers:{'X-LEGENDS-BROWSER-CACHE':'MISS'}};
+  }catch(error){if(cached&&age<maxStale)return {data:{...cached.data,cacheNotice:'نمایش آخرین دادهٔ ذخیره‌شده به‌دلیل اختلال موقت اتصال'},status:200,headers:{'X-LEGENDS-BROWSER-CACHE':'STALE'}};throw error;}
+ }
  window.LEGENDS_API_FETCH=async function(url,options={}){
-  const key=String(url),ttl=ttlFor(key),maxStale=maxStaleFor(key),cached=read(key),age=cached?now()-cached.at:Infinity;
-  if(cached&&age<ttl)return response(cached.data);
-  if(inflight.has(key))return inflight.get(key);
-  const task=runQueued(async()=>{
-   try{
-    const r=await window.LEGENDS_API_FETCH(url,options);
-    if(r.ok){const copy=await r.clone().json().catch(()=>null);if(copy!==null){try{localStorage.setItem(PREFIX+key,JSON.stringify({at:now(),data:copy}))}catch(_){}}return r;}
-    if(r.status===429&&cached&&age<maxStale)return response(cached.data);
-    return r;
-   }catch(err){if(cached&&age<maxStale)return response(cached.data);throw err;}
-  });
+  const key=String(url),cached=read(key),age=cached?now()-cached.at:Infinity;
+  if(cached&&age<ttlFor(url,cached.data))return makeResponse(cached.data,200,{'X-LEGENDS-BROWSER-CACHE':'HIT'});
+  if(inflight.has(key)){const result=await inflight.get(key);return makeResponse(result.data,result.status,result.headers)}
+  const task=enqueue(()=>perform(url,options,key,cached,age,maxStaleFor(url)));
   inflight.set(key,task);
-  try{return await task}finally{inflight.delete(key)}
+  try{const result=await task;return makeResponse(result.data,result.status,result.headers)}finally{inflight.delete(key)}
  };
 })();
 </script>
